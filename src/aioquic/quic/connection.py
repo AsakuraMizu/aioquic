@@ -2042,7 +2042,8 @@ class QuicConnection:
                 self._quic_logger.encode_path_challenge_frame(data=data)
             )
 
-        context.network_path.remote_challenges.append(data)
+        if len(context.network_path.remote_challenges) < MAX_REMOTE_CHALLENGES:
+            context.network_path.remote_challenges.append(data)
 
     def _handle_path_response_frame(
         self, context: QuicReceiveContext, frame_type: int, buf: Buffer
